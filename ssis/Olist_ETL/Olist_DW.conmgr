@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="Olist_DW"
+  DTS:DTSID="{5BB00393-8F21-4619-97BD-F0CFF7741472}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=localhost;Initial Catalog=Olist_DW;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Olist_ETL-{5BB00393-8F21-4619-97BD-F0CFF7741472}localhost.Olist_DW;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

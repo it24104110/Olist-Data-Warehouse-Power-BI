@@ -1,0 +1,22 @@
+# Raw dataset (download from Kaggle, see data/README.md)
+data/*.csv
+archive/
+
+# Local-only files (old drafts, assignment brief, notes)
+_private/
+
+# Visual Studio (SSIS / SSAS) build output and user settings
+.vs/
+bin/
+obj/
+*.user
+
+# Office / Power BI temp and lock files
+~$*
+*.tmp
+*.pbix.bak
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store

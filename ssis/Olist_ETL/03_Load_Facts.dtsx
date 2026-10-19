@@ -1,0 +1,1624 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/3/2026 2:41:54 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MI-LUZ"
+  DTS:CreatorName="MI-LUZ\utente"
+  DTS:DTSID="{CBA3E617-43D7-4871-AD54-D559C700118F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{DD2BA23A-DAE1-4FC5-B76B-7BBC22F1250A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clear fact tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5C4D47D3-980D-41EC-9E64-4B02AB33C24B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clear fact tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5BB00393-8F21-4619-97BD-F0CFF7741472}"
+          SQLTask:SqlStatementSource="DELETE FROM dw.Fact_OrderFulfilment;&#xA;DELETE FROM dw.Fact_Sales;&#xA;DBCC CHECKIDENT ('dw.Fact_Sales', RESEED, 0);&#xA;DBCC CHECKIDENT ('dw.Fact_OrderFulfilment', RESEED, 0);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Fact_OrderFulfilment"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C4DC6E58-533C-45D8-8D14-2E243655E4FA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Fact_OrderFulfilment"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Fact_OrderFulfilment\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dw].[Fact_OrderFulfilment]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{5BB00393-8F21-4619-97BD-F0CFF7741472}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Olist_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[purchase_date_key]"
+                      cachedDataType="i4"
+                      cachedName="purchase_date_key"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[purchase_date_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[purchase_date_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[delivered_date_key]"
+                      cachedDataType="i4"
+                      cachedName="delivered_date_key"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[delivered_date_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivered_date_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[estimated_delivery_date_key]"
+                      cachedDataType="i4"
+                      cachedName="estimated_delivery_date_key"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[estimated_delivery_date_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[estimated_delivery_date_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_key]"
+                      cachedDataType="i4"
+                      cachedName="customer_key"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_location_key]"
+                      cachedDataType="i4"
+                      cachedName="customer_location_key"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_location_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_location_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_status_key]"
+                      cachedDataType="i4"
+                      cachedName="order_status_key"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_status_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_status_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[payment_type_key]"
+                      cachedDataType="i4"
+                      cachedName="payment_type_key"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[payment_type_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_type_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="32"
+                      cachedName="order_id"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[item_count]"
+                      cachedDataType="i4"
+                      cachedName="item_count"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[item_count]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[item_count]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[payment_total]"
+                      cachedDataType="numeric"
+                      cachedName="payment_total"
+                      cachedPrecision="12"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[payment_total]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_total]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[payment_installments]"
+                      cachedDataType="i4"
+                      cachedName="payment_installments"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[payment_installments]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_installments]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[delivery_days]"
+                      cachedDataType="i4"
+                      cachedName="delivery_days"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[delivery_days]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivery_days]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[delivery_delay_days]"
+                      cachedDataType="i4"
+                      cachedName="delivery_delay_days"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[delivery_delay_days]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivery_delay_days]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[is_late_delivery]"
+                      cachedDataType="bool"
+                      cachedName="is_late_delivery"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_late_delivery]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_late_delivery]" />
+                    <inputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[review_score]"
+                      cachedDataType="ui1"
+                      cachedName="review_score"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[review_score]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[review_score]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fulfilment_key]"
+                      dataType="i8"
+                      name="fulfilment_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[purchase_date_key]"
+                      dataType="i4"
+                      name="purchase_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[delivered_date_key]"
+                      dataType="i4"
+                      name="delivered_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[estimated_delivery_date_key]"
+                      dataType="i4"
+                      name="estimated_delivery_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_key]"
+                      dataType="i4"
+                      name="customer_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_location_key]"
+                      dataType="i4"
+                      name="customer_location_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_status_key]"
+                      dataType="i4"
+                      name="order_status_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[payment_type_key]"
+                      dataType="i4"
+                      name="payment_type_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="32"
+                      name="order_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[item_count]"
+                      dataType="i4"
+                      name="item_count" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[payment_total]"
+                      dataType="numeric"
+                      name="payment_total"
+                      precision="12"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[payment_installments]"
+                      dataType="i4"
+                      name="payment_installments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[delivery_days]"
+                      dataType="i4"
+                      name="delivery_days" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[delivery_delay_days]"
+                      dataType="i4"
+                      name="delivery_delay_days" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_late_delivery]"
+                      dataType="bool"
+                      name="is_late_delivery" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[review_score]"
+                      dataType="ui1"
+                      name="review_score" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[etl_load_date]"
+                      dataType="dbTimeStamp2"
+                      name="etl_load_date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Fact_OrderFulfilment\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">WITH items AS (
+    SELECT order_id, COUNT(*) AS item_count
+    FROM stg.stg_order_items GROUP BY order_id
+),
+pay AS (
+    SELECT order_id, SUM(payment_value) AS payment_total
+    FROM stg.stg_order_payments GROUP BY order_id
+),
+main_pay AS (
+    SELECT order_id, payment_type, payment_installments,
+           ROW_NUMBER() OVER (PARTITION BY order_id
+                              ORDER BY payment_value DESC, payment_sequential ASC) AS rn
+    FROM stg.stg_order_payments
+),
+rev AS (
+    SELECT order_id, review_score,
+           ROW_NUMBER() OVER (PARTITION BY order_id
+                              ORDER BY review_creation_date DESC, review_answer_timestamp DESC, review_id DESC) AS rn
+    FROM stg.stg_order_reviews
+)
+SELECT COALESCE(dpd.date_key, -1)          AS purchase_date_key,
+       COALESCE(ddd.date_key, -1)          AS delivered_date_key,
+       COALESCE(ded.date_key, -1)          AS estimated_delivery_date_key,
+       COALESCE(dc.customer_key, -1)       AS customer_key,
+       COALESCE(dl.location_key, -1)       AS customer_location_key,
+       COALESCE(dos.order_status_key, -1)  AS order_status_key,
+       COALESCE(dpt.payment_type_key, -1)  AS payment_type_key,
+       o.order_id,
+       COALESCE(i.item_count, 0)           AS item_count,
+       CAST(p.payment_total AS DECIMAL(12,2)) AS payment_total,
+       mp.payment_installments,
+       DATEDIFF(DAY, o.order_purchase_timestamp, o.order_delivered_customer_date)      AS delivery_days,
+       DATEDIFF(DAY, o.order_estimated_delivery_date, o.order_delivered_customer_date) AS delivery_delay_days,
+       CASE WHEN o.order_delivered_customer_date IS NULL THEN NULL
+            WHEN DATEDIFF(DAY, o.order_estimated_delivery_date, o.order_delivered_customer_date) &gt; 0 THEN CAST(1 AS BIT)
+            ELSE CAST(0 AS BIT) END        AS is_late_delivery,
+       r.review_score
+FROM stg.stg_orders o
+LEFT JOIN stg.stg_customers c    ON c.customer_id = o.customer_id
+LEFT JOIN items i                ON i.order_id = o.order_id
+LEFT JOIN pay p                  ON p.order_id = o.order_id
+LEFT JOIN main_pay mp            ON mp.order_id = o.order_id AND mp.rn = 1
+LEFT JOIN rev r                  ON r.order_id = o.order_id AND r.rn = 1
+LEFT JOIN dw.Dim_Date dpd        ON dpd.full_date = CAST(o.order_purchase_timestamp AS DATE)
+LEFT JOIN dw.Dim_Date ddd        ON ddd.full_date = CAST(o.order_delivered_customer_date AS DATE)
+LEFT JOIN dw.Dim_Date ded        ON ded.full_date = CAST(o.order_estimated_delivery_date AS DATE)
+LEFT JOIN dw.Dim_Customer dc     ON dc.customer_unique_id = c.customer_unique_id
+LEFT JOIN dw.Dim_Location dl     ON dl.zip_code_prefix = c.customer_zip_code_prefix
+LEFT JOIN dw.Dim_OrderStatus dos ON dos.order_status = o.order_status
+LEFT JOIN dw.Dim_PaymentType dpt ON dpt.payment_type = mp.payment_type;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{5BB00393-8F21-4619-97BD-F0CFF7741472}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Olist_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[purchase_date_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[purchase_date_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[purchase_date_key]"
+                      name="purchase_date_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivered_date_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[delivered_date_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivered_date_key]"
+                      name="delivered_date_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[estimated_delivery_date_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[estimated_delivery_date_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[estimated_delivery_date_key]"
+                      name="estimated_delivery_date_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_key]"
+                      name="customer_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_location_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_location_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_location_key]"
+                      name="customer_location_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_status_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_status_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_status_key]"
+                      name="order_status_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_type_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[payment_type_key]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_type_key]"
+                      name="payment_type_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      length="32"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]"
+                      name="order_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[item_count]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[item_count]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[item_count]"
+                      name="item_count"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_total]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[payment_total]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_total]"
+                      name="payment_total"
+                      precision="12"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_installments]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[payment_installments]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[payment_installments]"
+                      name="payment_installments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivery_days]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[delivery_days]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivery_days]"
+                      name="delivery_days"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivery_delay_days]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[delivery_delay_days]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[delivery_delay_days]"
+                      name="delivery_delay_days"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_late_delivery]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[is_late_delivery]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_late_delivery]"
+                      name="is_late_delivery"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[review_score]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[review_score]"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].Columns[review_score]"
+                      name="review_score"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[purchase_date_key]"
+                      dataType="i4"
+                      name="purchase_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[delivered_date_key]"
+                      dataType="i4"
+                      name="delivered_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[estimated_delivery_date_key]"
+                      dataType="i4"
+                      name="estimated_delivery_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_key]"
+                      dataType="i4"
+                      name="customer_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_location_key]"
+                      dataType="i4"
+                      name="customer_location_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_status_key]"
+                      dataType="i4"
+                      name="order_status_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[payment_type_key]"
+                      dataType="i4"
+                      name="payment_type_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="32"
+                      name="order_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[item_count]"
+                      dataType="i4"
+                      name="item_count" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[payment_total]"
+                      dataType="numeric"
+                      name="payment_total"
+                      precision="12"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[payment_installments]"
+                      dataType="i4"
+                      name="payment_installments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[delivery_days]"
+                      dataType="i4"
+                      name="delivery_days" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[delivery_delay_days]"
+                      dataType="i4"
+                      name="delivery_delay_days" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[is_late_delivery]"
+                      dataType="bool"
+                      name="is_late_delivery" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[review_score]"
+                      dataType="ui1"
+                      name="review_score" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[purchase_date_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[purchase_date_key]"
+                      name="purchase_date_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[delivered_date_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[delivered_date_key]"
+                      name="delivered_date_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[estimated_delivery_date_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[estimated_delivery_date_key]"
+                      name="estimated_delivery_date_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_key]"
+                      name="customer_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_location_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_location_key]"
+                      name="customer_location_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_status_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_status_key]"
+                      name="order_status_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[payment_type_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[payment_type_key]"
+                      name="payment_type_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="32"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      name="order_id" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[item_count]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[item_count]"
+                      name="item_count" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[payment_total]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[payment_total]"
+                      name="payment_total"
+                      precision="12"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[payment_installments]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[payment_installments]"
+                      name="payment_installments" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[delivery_days]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[delivery_days]"
+                      name="delivery_days" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[delivery_delay_days]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[delivery_delay_days]"
+                      name="delivery_delay_days" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[is_late_delivery]"
+                      dataType="bool"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[is_late_delivery]"
+                      name="is_late_delivery" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[review_score]"
+                      dataType="ui1"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[review_score]"
+                      name="review_score" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Fact_OrderFulfilment.Paths[OLE DB Source Output]"
+              endId="Package\Load Fact_OrderFulfilment\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load Fact_OrderFulfilment\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Fact_Sales"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{E6C3427B-7180-4F24-991F-A19415C7CA86}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Fact_Sales"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Fact_Sales\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dw].[Fact_Sales]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fact_Sales\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{5BB00393-8F21-4619-97BD-F0CFF7741472}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Olist_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_date_key]"
+                      cachedDataType="i4"
+                      cachedName="order_date_key"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_date_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_date_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_key]"
+                      cachedDataType="i4"
+                      cachedName="customer_key"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[product_key]"
+                      cachedDataType="i4"
+                      cachedName="product_key"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[product_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[seller_key]"
+                      cachedDataType="i4"
+                      cachedName="seller_key"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[seller_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[seller_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_location_key]"
+                      cachedDataType="i4"
+                      cachedName="customer_location_key"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_location_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_location_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[seller_location_key]"
+                      cachedDataType="i4"
+                      cachedName="seller_location_key"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[seller_location_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[seller_location_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_status_key]"
+                      cachedDataType="i4"
+                      cachedName="order_status_key"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_status_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_status_key]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="32"
+                      cachedName="order_id"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[order_item_id]"
+                      cachedDataType="i4"
+                      cachedName="order_item_id"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_item_id]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_item_id]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[quantity]"
+                      cachedDataType="i4"
+                      cachedName="quantity"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[price]"
+                      cachedDataType="numeric"
+                      cachedName="price"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[price]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[price]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[freight_value]"
+                      cachedDataType="numeric"
+                      cachedName="freight_value"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[freight_value]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[freight_value]" />
+                    <inputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[item_total_value]"
+                      cachedDataType="numeric"
+                      cachedName="item_total_value"
+                      cachedPrecision="11"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[item_total_value]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[item_total_value]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[sales_key]"
+                      dataType="i8"
+                      name="sales_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_date_key]"
+                      dataType="i4"
+                      name="order_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_key]"
+                      dataType="i4"
+                      name="customer_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_key]"
+                      dataType="i4"
+                      name="product_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[seller_key]"
+                      dataType="i4"
+                      name="seller_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_location_key]"
+                      dataType="i4"
+                      name="customer_location_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[seller_location_key]"
+                      dataType="i4"
+                      name="seller_location_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_status_key]"
+                      dataType="i4"
+                      name="order_status_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="32"
+                      name="order_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[order_item_id]"
+                      dataType="i4"
+                      name="order_item_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
+                      dataType="i4"
+                      name="quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[price]"
+                      dataType="numeric"
+                      name="price"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[freight_value]"
+                      dataType="numeric"
+                      name="freight_value"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[item_total_value]"
+                      dataType="numeric"
+                      name="item_total_value"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[etl_load_date]"
+                      dataType="dbTimeStamp2"
+                      name="etl_load_date" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Fact_Sales\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Fact_Sales\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT COALESCE(dd.date_key, -1)           AS order_date_key,
+       COALESCE(dc.customer_key, -1)       AS customer_key,
+       COALESCE(dp.product_key, -1)        AS product_key,
+       COALESCE(ds.seller_key, -1)         AS seller_key,
+       COALESCE(dlc.location_key, -1)      AS customer_location_key,
+       COALESCE(dls.location_key, -1)      AS seller_location_key,
+       COALESCE(dos.order_status_key, -1)  AS order_status_key,
+       i.order_id,
+       i.order_item_id,
+       CAST(1 AS INT)                      AS quantity,
+       i.price,
+       i.freight_value,
+       i.price + i.freight_value           AS item_total_value
+FROM stg.stg_order_items i
+JOIN stg.stg_orders o          ON o.order_id = i.order_id
+LEFT JOIN stg.stg_customers c  ON c.customer_id = o.customer_id
+LEFT JOIN stg.stg_sellers s    ON s.seller_id = i.seller_id
+LEFT JOIN dw.Dim_Date dd       ON dd.full_date = CAST(o.order_purchase_timestamp AS DATE)
+LEFT JOIN dw.Dim_Customer dc   ON dc.customer_unique_id = c.customer_unique_id
+LEFT JOIN dw.Dim_Product dp    ON dp.product_id = i.product_id
+LEFT JOIN dw.Dim_Seller ds     ON ds.seller_id = i.seller_id
+LEFT JOIN dw.Dim_Location dlc  ON dlc.zip_code_prefix = c.customer_zip_code_prefix
+LEFT JOIN dw.Dim_Location dls  ON dls.zip_code_prefix = s.seller_zip_code_prefix
+LEFT JOIN dw.Dim_OrderStatus dos ON dos.order_status = o.order_status;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fact_Sales\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{5BB00393-8F21-4619-97BD-F0CFF7741472}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Olist_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_date_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_date_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_date_key]"
+                      name="order_date_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_key]"
+                      name="customer_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[product_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[product_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[product_key]"
+                      name="product_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[seller_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[seller_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[seller_key]"
+                      name="seller_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_location_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_location_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_location_key]"
+                      name="customer_location_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[seller_location_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[seller_location_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[seller_location_key]"
+                      name="seller_location_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_status_key]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_status_key]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_status_key]"
+                      name="order_status_key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      length="32"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_id]"
+                      name="order_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_item_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_item_id]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[order_item_id]"
+                      name="order_item_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[quantity]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[quantity]"
+                      name="quantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[price]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[price]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[price]"
+                      name="price"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[freight_value]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[freight_value]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[freight_value]"
+                      name="freight_value"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[item_total_value]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[item_total_value]"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].Columns[item_total_value]"
+                      name="item_total_value"
+                      precision="11"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_date_key]"
+                      dataType="i4"
+                      name="order_date_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_key]"
+                      dataType="i4"
+                      name="customer_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[product_key]"
+                      dataType="i4"
+                      name="product_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[seller_key]"
+                      dataType="i4"
+                      name="seller_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[customer_location_key]"
+                      dataType="i4"
+                      name="customer_location_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[seller_location_key]"
+                      dataType="i4"
+                      name="seller_location_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_status_key]"
+                      dataType="i4"
+                      name="order_status_key" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="32"
+                      name="order_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[order_item_id]"
+                      dataType="i4"
+                      name="order_item_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[quantity]"
+                      dataType="i4"
+                      name="quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[price]"
+                      dataType="numeric"
+                      name="price"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[freight_value]"
+                      dataType="numeric"
+                      name="freight_value"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[item_total_value]"
+                      dataType="numeric"
+                      name="item_total_value"
+                      precision="11"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_date_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_date_key]"
+                      name="order_date_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_key]"
+                      name="customer_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[product_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[product_key]"
+                      name="product_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[seller_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[seller_key]"
+                      name="seller_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_location_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[customer_location_key]"
+                      name="customer_location_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[seller_location_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[seller_location_key]"
+                      name="seller_location_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_status_key]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_status_key]"
+                      name="order_status_key" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="32"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_id]"
+                      name="order_id" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_item_id]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[order_item_id]"
+                      name="order_item_id" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[quantity]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[quantity]"
+                      name="quantity" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[price]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[price]"
+                      name="price"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[freight_value]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[freight_value]"
+                      name="freight_value"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[item_total_value]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[item_total_value]"
+                      name="item_total_value"
+                      precision="11"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Fact_Sales.Paths[OLE DB Source Output]"
+              endId="Package\Load Fact_Sales\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load Fact_Sales\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{CDA56E30-FDAA-45B9-BA44-5A8417D53C04}"
+      DTS:From="Package\Clear fact tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load Fact_Sales" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{B5EFC799-59AC-42BD-AFAC-750E3D62B29D}"
+      DTS:From="Package\Load Fact_Sales"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Fact_OrderFulfilment" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\Clear fact tables"
+          TopLeft="50.6249977368862,29.2499986052514" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Load Fact_OrderFulfilment"
+          TopLeft="506.916644035529,33.7999983882909" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\Load Fact_Sales"
+          TopLeft="282.499987371266,31.1999985122685" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="206.624997736886,51.5583318920933">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="75.8749896343801,0"
+              Start="0,0"
+              End="68.3749896343801,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="68.3749896343801,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="438.499987371266,53.833331783613">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="68.4166566642625,0"
+              Start="0,0"
+              End="60.9166566642625,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="60.9166566642625,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Fact_OrderFulfilment">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Load Fact_OrderFulfilment\OLE DB Source"
+          TopLeft="184.999994486571,201.999993979931" />
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Load Fact_OrderFulfilment\OLE DB Destination"
+          TopLeft="184.999994486571,390.999988347292" />
+        <EdgeLayout
+          Id="Package\Load Fact_OrderFulfilment.Paths[OLE DB Source Output]"
+          TopLeft="260.333327819904,244.666660646598">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.6666666666667,146.333327700695"
+              Start="0,0"
+              End="10.6666666666667,138.833327700695">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,69.1666638503473" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,69.1666638503473"
+                    Point2="0,73.1666638503473"
+                    Point3="4,73.1666638503473" />
+                  <mssgle:LineSegment
+                    End="6.66666666666669,73.1666638503473" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.66666666666669,73.1666638503473"
+                    Point2="10.6666666666667,73.1666638503473"
+                    Point3="10.6666666666667,77.1666638503473" />
+                  <mssgle:LineSegment
+                    End="10.6666666666667,138.833327700695" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fact_OrderFulfilment\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fact_OrderFulfilment\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load Fact_Sales">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Load Fact_Sales\OLE DB Source"
+          TopLeft="136.874993881211,82.5499960637094" />
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Load Fact_Sales\OLE DB Destination"
+          TopLeft="351.874984269962,82.5499960637092" />
+        <EdgeLayout
+          Id="Package\Load Fact_Sales.Paths[OLE DB Source Output]"
+          TopLeft="287.541660547878,103.883329397043">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.3333237220847,0"
+              Start="0,0"
+              End="56.8333237220847,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="56.8333237220847,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fact_Sales\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fact_Sales\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
